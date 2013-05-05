@@ -5,7 +5,8 @@ import java.util.Locale;
 
 public interface ITemplatingService
 {
+  public void setResourceLoaderRoot (String resourceLoaderRoot);
 
-  public abstract InputStream getLayoutTemplate (Locale forLocale, String templatePath);
+  public InputStream getLayoutTemplate (Locale forLocale, String templatePath);
 
 }
