@@ -1,4 +1,4 @@
-package org.vaadin.appbase.service.impl;
+package org.vaadin.appbase.service.templating.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -22,7 +22,7 @@ import org.apache.velocity.tools.generic.ResourceTool;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
-import org.vaadin.appbase.service.ITemplatingService;
+import org.vaadin.appbase.service.templating.ITemplatingService;
 
 @Service
 @org.springframework.context.annotation.Scope (value = WebApplicationContext.SCOPE_APPLICATION, proxyMode = ScopedProxyMode.TARGET_CLASS)

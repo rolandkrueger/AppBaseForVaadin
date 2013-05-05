@@ -1,4 +1,4 @@
-package org.vaadin.appbase.service;
+package org.vaadin.appbase.service.templating;
 
 import java.io.InputStream;
 import java.util.Locale;

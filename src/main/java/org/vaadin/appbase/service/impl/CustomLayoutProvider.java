@@ -3,7 +3,7 @@ package org.vaadin.appbase.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.appbase.service.AbstractUsesServiceProvider;
 import org.vaadin.appbase.service.ICustomLayoutProvider;
-import org.vaadin.appbase.service.ITemplatingService;
+import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.session.SessionContext;
 
 import com.vaadin.ui.CustomLayout;
