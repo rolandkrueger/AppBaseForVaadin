@@ -97,6 +97,11 @@ public class TemplatingService implements ITemplatingService
 
   public void init ()
   {
+    if (velocityEngine != null) return;
+    if (log.isDebugEnabled ())
+    {
+      log.debug ("Initializing templating service. Active resource loader root: " + resourceLoaderRoot);
+    }
     contexts = new Hashtable<Locale, Context> ();
     velocityEngine = new VelocityEngine ();
     Properties velocityProperties = new Properties ();

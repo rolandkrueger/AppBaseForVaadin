@@ -10,7 +10,7 @@ import com.google.common.base.Preconditions;
  * </p>
  * <p>
  * Ein Place wird eindeutig über seinen Namen identifiziert. Jeder Place muss am
- * {@link DBQBPlaceManager} registriert werden, bevor er verwendet werden kann.
+ * {@link PlaceManager} registriert werden, bevor er verwendet werden kann.
  * </p>
  */
 public abstract class AbstractPlace
