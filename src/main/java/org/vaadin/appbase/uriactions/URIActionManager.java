@@ -6,9 +6,11 @@ import java.util.List;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.roklib.webapps.uridispatching.AbstractURIActionCommand;
+import org.roklib.webapps.uridispatching.AbstractURIActionHandler;
 import org.roklib.webapps.uridispatching.IURIActionHandler.ParameterMode;
 import org.roklib.webapps.uridispatching.URIActionDispatcher;
-import org.vaadin.appbase.event.impl.places.NavigationEvent;
+import org.vaadin.appbase.event.impl.navigation.NavigateToURIEvent;
 import org.vaadin.appbase.service.AbstractUsesServiceProvider;
 import org.vaadin.uriactions.URIActionNavigator;
 
@@ -46,7 +48,7 @@ public class URIActionManager extends AbstractUsesServiceProvider
   }
 
   @Subscribe
-  public void receiveNavigationEvent (NavigationEvent event)
+  public void receiveNavigationEvent (NavigateToURIEvent event)
   {
     if (log.isTraceEnabled ())
     {
@@ -72,6 +74,11 @@ public class URIActionManager extends AbstractUsesServiceProvider
     log.debug (buf.toString ());
   }
 
+  public void setRootCommand (AbstractURIActionCommand rootActioncommand)
+  {
+    uriActionDispatcher.getRootActionHandler ().setRootCommand (rootActioncommand);
+  }
+
   @Override
   protected void onServiceProviderSet ()
   {
@@ -81,5 +88,10 @@ public class URIActionManager extends AbstractUsesServiceProvider
   public String getCurrentNavigationState ()
   {
     return uriActionNavigator.getNavigator ().getState ();
+  }
+
+  public final void addHandler (AbstractURIActionHandler subHandler)
+  {
+    uriActionDispatcher.addHandler (subHandler);
   }
 }
