@@ -106,6 +106,15 @@ public class PlaceManager extends AbstractUsesServiceProvider
     place.activate ();
   }
 
+  public void reactivateCurrentPlace ()
+  {
+    if (!activePlaces.isEmpty ())
+    {
+      AbstractPlace currentPlace = activePlaces.pop ();
+      activatePlaceRecursively (currentPlace);
+    }
+  }
+
   @Override
   protected void onServiceProviderSet ()
   {
