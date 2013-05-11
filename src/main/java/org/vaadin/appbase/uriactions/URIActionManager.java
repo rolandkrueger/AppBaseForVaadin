@@ -43,7 +43,7 @@ public class URIActionManager extends AbstractUsesServiceProvider
 
     if (log.isDebugEnabled ())
     {
-      logActionOverview (uriActionDispatcher);
+      logActionOverview ();
     }
   }
 
@@ -60,10 +60,10 @@ public class URIActionManager extends AbstractUsesServiceProvider
   /**
    * Gibt eine Übersicht über alle registrierten URI Action Handler im Debug-Log aus.
    */
-  private void logActionOverview (URIActionDispatcher dispatcher)
+  public void logActionOverview ()
   {
     List<String> uriOverview = new ArrayList<String> ();
-    dispatcher.getRootActionHandler ().getActionURIOverview (uriOverview);
+    uriActionDispatcher.getRootActionHandler ().getActionURIOverview (uriOverview);
     log.debug ("Logging registered URI action handlers:");
     StringBuilder buf = new StringBuilder ();
     buf.append ('\n');
