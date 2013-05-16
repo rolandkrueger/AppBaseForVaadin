@@ -1,4 +1,4 @@
-package org.vaadin.appbase.event.impl.places;
+package org.vaadin.appbase.event.impl.navigation;
 
 import java.net.URI;
 
@@ -8,11 +8,11 @@ import org.vaadin.appbase.event.Event;
 
 import com.google.common.base.Preconditions;
 
-public class NavigationEvent extends Event
+public class NavigateToURIEvent extends Event
 {
   private final URI navigationTarget;
 
-  public NavigationEvent (Object source, AbstractURIActionHandler navigationTargetHandler)
+  public NavigateToURIEvent (Object source, AbstractURIActionHandler navigationTargetHandler)
   {
     super (source);
     Preconditions.checkNotNull (navigationTargetHandler);

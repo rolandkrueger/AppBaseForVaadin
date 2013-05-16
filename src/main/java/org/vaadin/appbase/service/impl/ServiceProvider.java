@@ -29,21 +29,7 @@ public class ServiceProvider implements IServiceProvider
   @Override
   public IEventBus getEventbus ()
   {
-    return getServices ().getEventbus ();
-  }
-
-  public static VaadinUIServices getServices ()
-  {
-    Object services = UI.getCurrent ().getData ();
-
-    if (services == null) { throw new IllegalStateException ("No valid SessionServices object found for UI "
-        + UI.getCurrent ().toString ()
-        + ". Did you forget to initialize the session service with SessionServices.startUp()?"); }
-
-    if (!(services instanceof VaadinUIServices)) { throw new IllegalStateException (
-        "Current UI's data element is not of type SessionServices. Did you forget to initialize the session service with SessionServices.startUp()?"); }
-
-    return (VaadinUIServices) services;
+    return VaadinUIServices.get ().getEventbus ();
   }
 
 }

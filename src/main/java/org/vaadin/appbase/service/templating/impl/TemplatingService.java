@@ -2,25 +2,19 @@ package org.vaadin.appbase.service.templating.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.velocity.Template;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.Scope;
-import org.apache.velocity.tools.ToolManager;
-import org.apache.velocity.tools.config.EasyFactoryConfiguration;
-import org.apache.velocity.tools.generic.ResourceTool;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 
@@ -29,38 +23,35 @@ import org.vaadin.appbase.service.templating.ITemplatingService;
 @Slf4j
 public class TemplatingService implements ITemplatingService
 {
-  private VelocityEngine       velocityEngine;
-  private Map<Locale, Context> contexts;
-  @Setter private String       messagePrefix = "msg";
-  @Setter private String       bundleNames   = "messages";
-  @Setter private String       resourceLoaderRoot;
+  @Autowired private VelocityEngine        velocityEngine;
+  @Autowired private MessageSource         messageSource;
+  private Map<Locale, Map<String, Object>> contexts;
 
   @Override
   public InputStream getLayoutTemplate (Locale forLocale, String templatePath)
   {
-    initIfNotYetInitialized ();
     InputStream cachedTemplate = loadFromCache (forLocale, templatePath);
     if (cachedTemplate != null) { return cachedTemplate; }
 
-    Context ctx = getContextFromCache (forLocale);
-    Template template = velocityEngine.getTemplate (templatePath + ".html");
-
-    StringWriter writer = new StringWriter ();
-    template.merge (ctx, writer);
-    return new ByteArrayInputStream (writer.toString ().getBytes (Charset.forName ("UTF-8")));
+    return new ByteArrayInputStream (merge (templatePath + ".html", forLocale).getBytes (Charset.forName ("UTF-8")));
   }
 
-  private void initIfNotYetInitialized ()
+  public String merge (String templateLocation, Locale locale)
   {
-    if (velocityEngine == null)
+    String text = VelocityEngineUtils.mergeTemplateIntoString (velocityEngine, templateLocation, "UTF-8",
+        getContextFromCache (locale));
+
+    return text == null ? "<null>" : text;
+  }
+
+  private Map<String, Object> getContextFromCache (Locale forLocale)
+  {
+    if (contexts == null)
     {
-      init ();
+      contexts = new HashMap<> ();
     }
-  }
 
-  private Context getContextFromCache (Locale forLocale)
-  {
-    Context ctx = contexts.get (forLocale);
+    Map<String, Object> ctx = contexts.get (forLocale);
     if (ctx == null)
     {
       ctx = createContextForLocale (forLocale);
@@ -83,33 +74,11 @@ public class TemplatingService implements ITemplatingService
     return cached;
   }
 
-  private Context createContextForLocale (Locale locale)
+  private Map<String, Object> createContextForLocale (Locale locale)
   {
-    EasyFactoryConfiguration config = new EasyFactoryConfiguration ();
-    config.toolbox (Scope.APPLICATION).tool (messagePrefix, ResourceTool.class).property ("bundles", bundleNames)
-        .property ("locale", locale);
-
-    ToolManager manager = new ToolManager (false, false);
-    manager.configure (config);
-
-    return manager.createContext ();
-  }
-
-  public void init ()
-  {
-    if (velocityEngine != null) return;
-    if (log.isDebugEnabled ())
-    {
-      log.debug ("Initializing templating service. Active resource loader root: " + resourceLoaderRoot);
-    }
-    contexts = new Hashtable<Locale, Context> ();
-    velocityEngine = new VelocityEngine ();
-    Properties velocityProperties = new Properties ();
-
-    velocityProperties.put ("resource.loader", "url");
-    velocityProperties.put ("url.resource.loader.root", resourceLoaderRoot);
-    velocityProperties.put ("url.resource.loader.class",
-        "org.apache.velocity.runtime.resource.loader.URLResourceLoader");
-    velocityEngine.init (velocityProperties);
+    Map<String, Object> context = new HashMap<> (2);
+    context.put ("messages", this.messageSource);
+    context.put ("locale", locale);
+    return context;
   }
 }
