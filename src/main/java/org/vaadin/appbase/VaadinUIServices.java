@@ -42,5 +42,4 @@ public class VaadinUIServices
 
     return (VaadinUIServices) services;
   }
-
 }
