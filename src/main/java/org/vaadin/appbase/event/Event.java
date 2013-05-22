@@ -13,7 +13,7 @@ public class Event implements IEvent
 
   protected String formatLogMessageImpl ()
   {
-    return "(Overwrite AbstractEvent.formatLogMessageImpl() to provide additional data)";
+    return "(Overwrite Event.formatLogMessageImpl() to provide additional data)";
   }
 
   @Override

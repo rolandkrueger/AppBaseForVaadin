@@ -8,6 +8,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.vaadin.appbase.VaadinUIServices;
+import org.vaadin.appbase.enums.ErrorSeverity;
+import org.vaadin.appbase.event.impl.error.ErrorEvent;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.session.SessionContext;
 import org.vaadin.appbase.view.IView;
@@ -19,7 +22,6 @@ import com.vaadin.ui.CustomLayout;
 
 public class CustomLayoutView implements IView
 {
-
   private String                                                     templateName;
   private CustomLayout                                               layout;
 
@@ -41,7 +43,8 @@ public class CustomLayoutView implements IView
   public void buildLayout ()
   {
     layout = createTranslatedCustomLayout (templateName);
-    if (!VaadinService.getCurrent ().getDeploymentConfiguration ().isProductionMode ())
+
+    if (layout != null && !VaadinService.getCurrent ().getDeploymentConfiguration ().isProductionMode ())
     {
       new ComponentHighlighterExtension (getLayout ()).setComponentDebugLabel (getClass ().getName ()
           + " (template name: " + templateName + ".html)");
@@ -65,10 +68,15 @@ public class CustomLayoutView implements IView
     try
     {
       layout = new CustomLayout (templatingService.getLayoutTemplate (context.getLocale (), templateName));
-    } catch (IOException e)
+    } catch (IOException ioExc)
     {
-      // TODO error handling
-      e.printStackTrace ();
+      VaadinUIServices
+          .get ()
+          .getEventbus ()
+          .post (
+              new ErrorEvent (this, ErrorSeverity.FATAL, "Error while loading CustomLayout template " + templateName,
+                  ioExc));
+      return null;
     }
     return layout;
   }
