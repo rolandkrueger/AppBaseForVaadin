@@ -3,19 +3,26 @@ package org.vaadin.appbase;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.vaadin.appbase.event.AppEventBus;
 import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.places.PlaceManager;
+import org.vaadin.appbase.service.templating.ITemplatingService;
+import org.vaadin.appbase.session.SessionContext;
 import org.vaadin.appbase.uriactions.URIActionManager;
 
 import com.vaadin.ui.UI;
 
+@Configurable
 public class VaadinUIServices
 {
-  @Getter @Setter private Object   data;
-  @Getter private IEventBus        eventbus;
-  @Getter private PlaceManager     placeManager;
-  @Getter private URIActionManager uriActionManager;
+  @Getter @Setter private Object                data;
+  @Getter private IEventBus                     eventbus;
+  @Getter private PlaceManager                  placeManager;
+  @Getter private URIActionManager              uriActionManager;
+  @Autowired @Getter private SessionContext     context;
+  @Autowired @Getter private ITemplatingService templatingService;
 
   public void startUp ()
   {

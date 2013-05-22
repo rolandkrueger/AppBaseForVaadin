@@ -4,15 +4,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.IOException;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-
 import org.vaadin.appbase.VaadinUIServices;
 import org.vaadin.appbase.enums.ErrorSeverity;
 import org.vaadin.appbase.event.impl.error.ErrorEvent;
-import org.vaadin.appbase.service.templating.ITemplatingService;
-import org.vaadin.appbase.session.SessionContext;
 import org.vaadin.appbase.view.IView;
 import org.vaadin.highlighter.ComponentHighlighterExtension;
 
@@ -22,21 +16,13 @@ import com.vaadin.ui.CustomLayout;
 
 public class CustomLayoutView implements IView
 {
-  private String                                                     templateName;
-  private CustomLayout                                               layout;
+  private String       templateName;
+  private CustomLayout layout;
 
-  @Setter @Getter (AccessLevel.PROTECTED) private ITemplatingService templatingService;
-
-  @Setter @Getter (AccessLevel.PROTECTED) private SessionContext     context;
-
-  public CustomLayoutView (ITemplatingService templatingService, SessionContext context, String templateName)
+  public CustomLayoutView (String templateName)
   {
-    checkNotNull (templatingService);
-    checkNotNull (context);
     checkNotNull (templateName);
     this.templateName = templateName;
-    this.templatingService = templatingService;
-    this.context = context;
   }
 
   @Override
@@ -67,7 +53,8 @@ public class CustomLayoutView implements IView
     CustomLayout layout = null;
     try
     {
-      layout = new CustomLayout (templatingService.getLayoutTemplate (context.getLocale (), templateName));
+      layout = new CustomLayout (VaadinUIServices.get ().getTemplatingService ()
+          .getLayoutTemplate (VaadinUIServices.get ().getContext ().getLocale (), templateName));
     } catch (IOException ioExc)
     {
       VaadinUIServices
