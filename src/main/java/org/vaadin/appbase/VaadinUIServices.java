@@ -26,6 +26,13 @@ public class VaadinUIServices
   @Autowired @Getter @Setter (AccessLevel.PROTECTED) private ITemplatingService templatingService;
 
   /**
+   * {@link VaadinUIServices} should be created with {@link #startUp()}.
+   */
+  private VaadinUIServices ()
+  {
+  }
+
+  /**
    * Creates a new instance of {@link VaadinUIServices} and sets this instance as data property for
    * the current {@link UI}.
    * 

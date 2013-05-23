@@ -1,6 +1,7 @@
 package org.vaadin.appbase.uriactions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -58,7 +59,18 @@ public class URIActionManager extends AbstractUsesServiceProvider
   }
 
   /**
-   * Gibt eine Übersicht über alle registrierten URI Action Handler im Debug-Log aus.
+   * Prints an overview of all registered URI action handlers along with their respective parameters
+   * as debug log statements. This looks like the following example:
+   * 
+   * <pre>
+   * <blockquote>
+   *   /admin
+   *   /admin/users
+   *   /articles
+   *   /articles/show ? {SingleIntegerURIParameter : articleId}
+   *   /login
+   * </blockquote>
+   * </pre>
    */
   public void logActionOverview ()
   {
@@ -67,6 +79,7 @@ public class URIActionManager extends AbstractUsesServiceProvider
     log.debug ("Logging registered URI action handlers:");
     StringBuilder buf = new StringBuilder ();
     buf.append ('\n');
+    Collections.sort (uriOverview);
     for (String url : uriOverview)
     {
       buf.append ('\t').append (url).append ('\n');
