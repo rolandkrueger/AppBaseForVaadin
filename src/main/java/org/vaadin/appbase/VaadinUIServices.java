@@ -1,5 +1,6 @@
 package org.vaadin.appbase;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,25 +18,41 @@ import com.vaadin.ui.UI;
 @Configurable
 public class VaadinUIServices
 {
-  @Getter @Setter private Object                data;
-  @Getter private IEventBus                     eventbus;
-  @Getter private PlaceManager                  placeManager;
-  @Getter private URIActionManager              uriActionManager;
-  @Autowired @Getter private SessionContext     context;
-  @Autowired @Getter private ITemplatingService templatingService;
+  @Getter @Setter private Object                                                data;
+  @Getter private IEventBus                                                     eventbus;
+  @Getter private PlaceManager                                                  placeManager;
+  @Getter private URIActionManager                                              uriActionManager;
+  @Autowired @Getter @Setter (AccessLevel.PROTECTED) private SessionContext     context;
+  @Autowired @Getter @Setter (AccessLevel.PROTECTED) private ITemplatingService templatingService;
 
-  public void startUp ()
+  /**
+   * Creates a new instance of {@link VaadinUIServices} and sets this instance as data property for
+   * the current {@link UI}.
+   * 
+   * @throws IllegalStateException
+   *           if the current UI's data property is alread set, e.g. if this function is called a
+   *           second time for the same UI
+   */
+  public static void startUp ()
   {
     if (UI.getCurrent ().getData () != null) { throw new IllegalStateException (
         "Given UI object already provides a data object through UI.getData(). Please use this object as container for this data instead."); }
-    UI.getCurrent ().setData (this);
+    VaadinUIServices instance = new VaadinUIServices ();
+    UI.getCurrent ().setData (instance);
 
-    eventbus = new AppEventBus ();
-    placeManager = new PlaceManager ();
-    uriActionManager = new URIActionManager ();
-    uriActionManager.initialize ();
+    instance.eventbus = new AppEventBus ();
+    instance.placeManager = new PlaceManager ();
+    instance.uriActionManager = new URIActionManager ();
+    instance.uriActionManager.initialize ();
   }
 
+  /**
+   * Gets the current {@link VaadinUIServices} instance for the current UI.
+   * 
+   * @throws IllegalStateException
+   *           if the current UI's data property is not a {@link VaadinUIServices} object or if no
+   *           such object exists since {@link #startUp()} has not been called
+   */
   public static VaadinUIServices get ()
   {
     Object services = UI.getCurrent ().getData ();

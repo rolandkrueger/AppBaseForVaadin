@@ -4,7 +4,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 import org.vaadin.appbase.service.IMessageProvider;
 
-public class MessageProviderMock implements IMessageProvider
+public class EmptyMessageProviderMock implements IMessageProvider
 {
 
   @Override

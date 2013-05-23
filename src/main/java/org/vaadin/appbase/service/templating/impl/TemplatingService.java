@@ -36,7 +36,7 @@ public class TemplatingService implements ITemplatingService
     return new ByteArrayInputStream (merge (templatePath + ".html", forLocale).getBytes (Charset.forName ("UTF-8")));
   }
 
-  public String merge (String templateLocation, Locale locale)
+  private String merge (String templateLocation, Locale locale)
   {
     String text = VelocityEngineUtils.mergeTemplateIntoString (velocityEngine, templateLocation, "UTF-8",
         getContextFromCache (locale));
