@@ -1,5 +1,6 @@
 package org.vaadin.appbase;
 
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
 import lombok.Getter;
 
 import org.junit.Before;
@@ -46,12 +47,12 @@ public abstract class AbstractAppBaseTest
   protected void startVaadinUIServices ()
   {
     VaadinUIServices.startUp ();
-    VaadinUIServices.get ().setContext (getSessionContext ());
-    VaadinUIServices.get ().setTemplatingService (getTemplatingService ());
+    UIServices ().setContext (getSessionContext ());
+    UIServices ().setTemplatingService (getTemplatingService ());
   }
 
   protected void registerOnEventbus ()
   {
-    VaadinUIServices.get ().getEventbus ().register (this);
+    UIServices ().getEventbus ().register (this);
   }
 }

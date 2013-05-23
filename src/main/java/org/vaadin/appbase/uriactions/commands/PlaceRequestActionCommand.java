@@ -1,8 +1,9 @@
 package org.vaadin.appbase.uriactions.commands;
 
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
+
 import org.roklib.util.helper.CheckForNull;
 import org.roklib.webapps.uridispatching.AbstractURIActionCommand;
-import org.vaadin.appbase.VaadinUIServices;
 import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
 import org.vaadin.appbase.places.AbstractPlace;
 import org.vaadin.appbase.places.PlaceManager;
@@ -32,7 +33,7 @@ public class PlaceRequestActionCommand extends AbstractURIActionCommand
   @Override
   public void execute ()
   {
-    VaadinUIServices.get ().getEventbus ().post (new PlaceRequestEvent (this, place));
+    UIServices ().getEventbus ().post (new PlaceRequestEvent (this, place));
   }
 
   @Override

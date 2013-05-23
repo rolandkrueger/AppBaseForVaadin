@@ -60,7 +60,7 @@ public class VaadinUIServices
    *           if the current UI's data property is not a {@link VaadinUIServices} object or if no
    *           such object exists since {@link #startUp()} has not been called
    */
-  public static VaadinUIServices get ()
+  public static VaadinUIServices UIServices ()
   {
     Object services = UI.getCurrent ().getData ();
 

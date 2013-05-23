@@ -3,6 +3,7 @@ package org.vaadin.appbase.components;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 import org.vaadin.appbase.AbstractAppBaseTest;
-import org.vaadin.appbase.VaadinUIServices;
 import org.vaadin.appbase.enums.ErrorSeverity;
 import org.vaadin.appbase.event.impl.error.ErrorEvent;
 import org.vaadin.appbase.service.templating.ITemplatingService;
@@ -26,7 +26,7 @@ public class CustomLayoutViewTest extends AbstractAppBaseTest
   {
     startVaadinUIServices ();
     registerOnEventbus ();
-    VaadinUIServices.get ().getEventbus ().register (this);
+    UIServices ().getEventbus ().register (this);
 
     CustomLayoutView view = new CustomLayoutView ("");
     view.buildLayout ();

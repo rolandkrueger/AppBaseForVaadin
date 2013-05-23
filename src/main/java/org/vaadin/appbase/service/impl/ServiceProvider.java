@@ -1,7 +1,8 @@
 package org.vaadin.appbase.service.impl;
 
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
+
 import org.springframework.stereotype.Component;
-import org.vaadin.appbase.VaadinUIServices;
 import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.service.IServiceProvider;
 
@@ -29,7 +30,7 @@ public class ServiceProvider implements IServiceProvider
   @Override
   public IEventBus getEventbus ()
   {
-    return VaadinUIServices.get ().getEventbus ();
+    return UIServices ().getEventbus ();
   }
 
 }

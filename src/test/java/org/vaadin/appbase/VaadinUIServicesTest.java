@@ -1,6 +1,7 @@
 package org.vaadin.appbase;
 
 import static org.junit.Assert.assertSame;
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
 
 import org.junit.Test;
 
@@ -12,22 +13,22 @@ public class VaadinUIServicesTest extends AbstractAppBaseTest
   public void testGet ()
   {
     VaadinUIServices.startUp ();
-    VaadinUIServices vaadinUIServices1 = VaadinUIServices.get ();
-    VaadinUIServices vaadinUIServices2 = VaadinUIServices.get ();
+    VaadinUIServices vaadinUIServices1 = UIServices ();
+    VaadinUIServices vaadinUIServices2 = UIServices ();
     assertSame (vaadinUIServices1, vaadinUIServices2);
   }
 
   @Test (expected = IllegalStateException.class)
   public void testGet_Fails ()
   {
-    VaadinUIServices.get ();
+    UIServices ();
   }
 
   @Test (expected = IllegalStateException.class)
   public void testGet_FailsWithoutPriorCallToStartUpAndAGivenUIDataObject ()
   {
     UI.getCurrent ().setData (new Object ());
-    VaadinUIServices.get ();
+    UIServices ();
   }
 
   @Test (expected = IllegalStateException.class)

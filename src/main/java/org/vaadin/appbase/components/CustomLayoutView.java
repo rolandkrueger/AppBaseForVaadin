@@ -1,10 +1,10 @@
 package org.vaadin.appbase.components;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.vaadin.appbase.VaadinUIServices.UIServices;
 
 import java.io.IOException;
 
-import org.vaadin.appbase.VaadinUIServices;
 import org.vaadin.appbase.enums.ErrorSeverity;
 import org.vaadin.appbase.event.impl.error.ErrorEvent;
 import org.vaadin.appbase.view.IView;
@@ -53,13 +53,11 @@ public class CustomLayoutView implements IView
     CustomLayout layout = null;
     try
     {
-      layout = new CustomLayout (VaadinUIServices.get ().getTemplatingService ()
-          .getLayoutTemplate (VaadinUIServices.get ().getContext ().getLocale (), templateName));
+      layout = new CustomLayout (UIServices ().getTemplatingService ().getLayoutTemplate (
+          UIServices ().getContext ().getLocale (), templateName));
     } catch (IOException ioExc)
     {
-      VaadinUIServices
-          .get ()
-          .getEventbus ()
+      UIServices ().getEventbus ()
           .post (
               new ErrorEvent (this, ErrorSeverity.FATAL, "Error while loading CustomLayout template " + templateName,
                   ioExc));
