@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.vaadin.appbase.event.AppEventBus;
 import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.places.PlaceManager;
+import org.vaadin.appbase.service.IMessageProvider;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.session.SessionContext;
 import org.vaadin.appbase.uriactions.URIActionManager;
@@ -24,6 +25,7 @@ public class VaadinUIServices
   @Getter private URIActionManager                                              uriActionManager;
   @Autowired @Getter @Setter (AccessLevel.PROTECTED) private SessionContext     context;
   @Autowired @Getter @Setter (AccessLevel.PROTECTED) private ITemplatingService templatingService;
+  @Autowired @Getter @Setter (AccessLevel.PROTECTED) private IMessageProvider   messageProvider;
 
   /**
    * {@link VaadinUIServices} should be created with {@link #startUp()}.
