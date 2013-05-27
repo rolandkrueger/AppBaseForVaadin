@@ -14,12 +14,12 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
 
-public class CustomLayoutView implements IView
+public class TranslatedCustomLayout implements IView
 {
   private String       templateName;
   private CustomLayout layout;
 
-  public CustomLayoutView (String templateName)
+  public TranslatedCustomLayout (String templateName)
   {
     checkNotNull (templateName);
     this.templateName = templateName;

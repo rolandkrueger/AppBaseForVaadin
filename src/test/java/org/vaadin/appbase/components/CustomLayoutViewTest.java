@@ -28,7 +28,7 @@ public class CustomLayoutViewTest extends AbstractAppBaseTest
     registerOnEventbus ();
     UIServices ().getEventbus ().register (this);
 
-    CustomLayoutView view = new CustomLayoutView ("");
+    TranslatedCustomLayout view = new TranslatedCustomLayout ("");
     view.buildLayout ();
 
     assertNotNull (event);
