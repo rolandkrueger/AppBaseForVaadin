@@ -17,7 +17,7 @@ import org.vaadin.appbase.service.templating.ITemplatingService;
 
 import com.google.common.eventbus.Subscribe;
 
-public class CustomLayoutViewTest extends AbstractAppBaseTest
+public class TranslatedCustomLayoutTest extends AbstractAppBaseTest
 {
   private ErrorEvent event;
 
