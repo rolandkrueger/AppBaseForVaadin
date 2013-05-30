@@ -20,7 +20,7 @@ public abstract class AbstractPlace
 
   public AbstractPlace (String name)
   {
-    Preconditions.checkArgument (name != null && !"".equals (name));
+    Preconditions.checkArgument (name != null && !"".equals (name.trim ()));
     this.name = name;
   }
 
@@ -88,5 +88,11 @@ public abstract class AbstractPlace
       if (other.name != null) return false;
     } else if (!name.equals (other.name)) return false;
     return true;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return getClass ().getName () + " [" + name + "]";
   }
 }

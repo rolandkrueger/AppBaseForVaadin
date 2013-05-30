@@ -1,15 +1,17 @@
 package org.vaadin.appbase.places;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
 import org.vaadin.appbase.service.AbstractUsesServiceProvider;
 
+import com.google.common.base.Preconditions;
 import com.google.common.eventbus.Subscribe;
 
 /**
@@ -24,15 +26,16 @@ import com.google.common.eventbus.Subscribe;
  * gerendert werden können. Ein Place wird eindeutig über seinen Namen identifiziert.
  * </p>
  */
-@Configurable (preConstruction = true)
 @Slf4j
 public class PlaceManager extends AbstractUsesServiceProvider
 {
-  private Stack<AbstractPlace> activePlaces;
+  private Stack<AbstractPlace>       activePlaces;
+  private Map<String, AbstractPlace> registeredPlaces;
 
   public PlaceManager ()
   {
     activePlaces = new Stack<> ();
+    registeredPlaces = new HashMap<String, AbstractPlace> ();
   }
 
   /**
@@ -115,6 +118,27 @@ public class PlaceManager extends AbstractUsesServiceProvider
     }
   }
 
+  public void registerPlace (AbstractPlace place)
+  {
+    Preconditions.checkArgument (place != null);
+    if (isPlaceRegistered (place.getName ())) { throw new IllegalArgumentException (
+        "This place is already registered: " + place); }
+    registeredPlaces.put (place.getName (), place);
+  }
+
+  public AbstractPlace getRegisteredPlace (String placeName)
+  {
+    Preconditions.checkArgument (placeName != null);
+    if (!isPlaceRegistered (placeName)) { throw new IllegalArgumentException (
+        "The requested place has not been registered with this place manager: " + placeName); }
+    return registeredPlaces.get (placeName);
+  }
+
+  public boolean isPlaceRegistered (String placeName)
+  {
+    return registeredPlaces.containsKey (placeName);
+  }
+
   @Override
   protected void onServiceProviderSet ()
   {
@@ -123,11 +147,5 @@ public class PlaceManager extends AbstractUsesServiceProvider
       log.debug ("Registering on event bus");
     }
     eventbus ().register (this);
-  }
-
-  @Override
-  public String toString ()
-  {
-    return "PlaceManager";
   }
 }

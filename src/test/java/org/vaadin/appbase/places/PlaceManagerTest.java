@@ -1,10 +1,12 @@
 package org.vaadin.appbase.places;
 
-import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
 import org.vaadin.appbase.places.testobjects.PlaceTestClass;
@@ -14,11 +16,56 @@ public class PlaceManagerTest
 {
   private PlaceManager testObj;
 
-  @BeforeTest
+  @BeforeMethod
   public void setUp ()
   {
     testObj = new PlaceManager ();
     testObj.setUIServiceProvider (new TestUIServiceProvider ());
+  }
+
+  @Test
+  public void testRegisterPlace ()
+  {
+    PlaceTestClass place = new PlaceTestClass ("place");
+    testObj.registerPlace (place);
+    assertEquals (testObj.getRegisteredPlace ("place"), place);
+  }
+
+  @Test (expectedExceptions = { IllegalArgumentException.class })
+  public void testRegisterPlace_Fails ()
+  {
+    PlaceTestClass place1 = new PlaceTestClass ("place");
+    PlaceTestClass place2 = new PlaceTestClass ("place");
+    testObj.registerPlace (place1);
+    testObj.registerPlace (place2);
+  }
+
+  @Test (expectedExceptions = { IllegalArgumentException.class })
+  public void testGetRegisteredPlace_Fails ()
+  {
+    testObj.getRegisteredPlace ("Unregistered Place");
+  }
+
+  @Test (expectedExceptions = { IllegalArgumentException.class })
+  public void testGetRegisteredPlace_FailsWithNullArgument ()
+  {
+    testObj.getRegisteredPlace (null);
+  }
+
+  @Test (expectedExceptions = { IllegalArgumentException.class })
+  public void testRegisterPlace_FailsWithNullArgument ()
+  {
+    testObj.registerPlace (null);
+  }
+
+  @Test
+  public void testIsPlaceRegistered ()
+  {
+    PlaceTestClass place = new PlaceTestClass ("place");
+    testObj.registerPlace (place);
+    assertTrue (testObj.isPlaceRegistered ("place"));
+    assertFalse (testObj.isPlaceRegistered (null));
+    assertFalse (testObj.isPlaceRegistered ("unregistered place"));
   }
 
   @Test
@@ -63,12 +110,12 @@ public class PlaceManagerTest
 
   private void assertActivePlaces (List<AbstractPlace> activePlaces, AbstractPlace... expectedPlaces)
   {
-    assertEquals ("Number of active places does not match expected number.", expectedPlaces.length,
-        activePlaces.size ());
+    assertEquals (activePlaces.size (), expectedPlaces.length,
+        "Number of active places does not match expected number.");
 
     for (int i = 0; i < activePlaces.size (); ++i)
     {
-      assertEquals ("", expectedPlaces[i], activePlaces.get (i));
+      assertEquals (activePlaces.get (i), expectedPlaces[i]);
     }
   }
 }
