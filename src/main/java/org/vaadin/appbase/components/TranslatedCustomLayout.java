@@ -26,7 +26,7 @@ public class TranslatedCustomLayout implements IView
   }
 
   @Override
-  public void buildLayout ()
+  public IView buildLayout ()
   {
     layout = createTranslatedCustomLayout (templateName);
 
@@ -35,6 +35,7 @@ public class TranslatedCustomLayout implements IView
       new ComponentHighlighterExtension (getLayout ()).setComponentDebugLabel (getClass ().getName ()
           + " (template name: " + templateName + ".html)");
     }
+    return this;
   }
 
   @Override

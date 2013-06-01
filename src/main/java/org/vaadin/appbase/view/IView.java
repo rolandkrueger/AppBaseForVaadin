@@ -5,7 +5,7 @@ import com.vaadin.ui.Component;
 public interface IView
 {
 
-  public void buildLayout ();
+  public IView buildLayout ();
 
   public Component getContent ();
 
