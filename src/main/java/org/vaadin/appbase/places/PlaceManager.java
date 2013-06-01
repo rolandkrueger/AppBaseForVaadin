@@ -47,7 +47,7 @@ public class PlaceManager extends AbstractUsesServiceProvider
     AbstractPlace place = event.getPlace ();
     if (log.isDebugEnabled ())
     {
-      log.debug ("Handling place request event " + place.getName ());
+      log.debug ("Handling place request event " + place.getClass ().getName () + " (" + place.getName () + ")  ");
     }
 
     // Place aktivieren
