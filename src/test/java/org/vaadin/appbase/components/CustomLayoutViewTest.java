@@ -17,7 +17,7 @@ import org.vaadin.appbase.service.templating.ITemplatingService;
 
 import com.google.common.eventbus.Subscribe;
 
-public class TranslatedCustomLayoutTest extends AbstractAppBaseTest
+public class CustomLayoutViewTest extends AbstractAppBaseTest
 {
   private ErrorEvent event;
 
@@ -28,7 +28,7 @@ public class TranslatedCustomLayoutTest extends AbstractAppBaseTest
     registerOnEventbus ();
     UIServices ().getEventbus ().register (this);
 
-    TranslatedCustomLayout view = new TranslatedCustomLayout ("");
+    CustomLayoutView view = new CustomLayoutView ("");
     view.buildLayout ();
 
     assertNotNull (event);
