@@ -5,7 +5,7 @@
 	<groupId>org.vaadin.addons.appbase</groupId>
 	<artifactId>appbase4vaadin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>App base for Vaadin application</name>
 
 	<url>http://www.rolandkrueger.info</url>
@@ -19,7 +19,7 @@
 		<docbook.target>${project.build.directory}/docbkx</docbook.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
-		<vaadin.version>7.1.0.beta1</vaadin.version>
+		<vaadin.version>7.1.0</vaadin.version>
 		<spring.version>3.2.2.RELEASE</spring.version>
 	</properties>
 
@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>org.vaadin.addons.componenthighlighter</groupId>
 			<artifactId>componenthighlighter</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
