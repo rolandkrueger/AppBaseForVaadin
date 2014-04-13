@@ -12,34 +12,33 @@ import org.vaadin.appbase.service.IMessageProvider;
 import org.vaadin.appbase.session.SessionContext;
 
 @Service
-@Scope (value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class MessageProvider implements IMessageProvider
-{
-  @Autowired private SessionContext context;
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class MessageProvider implements IMessageProvider {
+  private static final long serialVersionUID = 3500618248234078311L;
 
-  @Autowired private MessageSource  messageSource;
+  @Autowired
+  private SessionContext context;
+
+  @Autowired
+  private MessageSource messageSource;
 
   @Override
-  public String getMessage (MessageSourceResolvable messageSourceResolvable) throws NoSuchMessageException
-  {
-    return messageSource.getMessage (messageSourceResolvable, context.getLocale ());
+  public String getMessage(MessageSourceResolvable messageSourceResolvable) throws NoSuchMessageException {
+    return messageSource.getMessage(messageSourceResolvable, context.getLocale());
   }
 
   @Override
-  public String getMessage (String code, Object[] args) throws NoSuchMessageException
-  {
-    return messageSource.getMessage (code, args, context.getLocale ());
+  public String getMessage(String code, Object[] args) throws NoSuchMessageException {
+    return messageSource.getMessage(code, args, context.getLocale());
   }
 
   @Override
-  public String getMessage (String code, Object[] args, String defaultMessage)
-  {
-    return messageSource.getMessage (code, args, defaultMessage, context.getLocale ());
+  public String getMessage(String code, Object[] args, String defaultMessage) {
+    return messageSource.getMessage(code, args, defaultMessage, context.getLocale());
   }
 
-  public String getMessage (String code) throws NoSuchMessageException
-  {
-    return getMessage (code, null);
+  public String getMessage(String code) throws NoSuchMessageException {
+    return getMessage(code, null);
   }
 
 }

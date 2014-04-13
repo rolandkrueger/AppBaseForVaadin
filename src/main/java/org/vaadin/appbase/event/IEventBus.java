@@ -1,10 +1,11 @@
 package org.vaadin.appbase.event;
 
-public interface IEventBus
-{
-  public abstract void post (IEvent event);
+import java.io.Serializable;
 
-  public abstract void register (Object listener);
+public interface IEventBus extends Serializable {
+  public abstract void post(IEvent event);
 
-  public abstract void unregister (Object listener);
+  public abstract void register(Object listener);
+
+  public abstract void unregister(Object listener);
 }
