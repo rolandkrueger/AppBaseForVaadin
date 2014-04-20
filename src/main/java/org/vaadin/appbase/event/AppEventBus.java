@@ -3,13 +3,24 @@ package org.vaadin.appbase.event;
 import lombok.extern.slf4j.Slf4j;
 
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.SubscriberExceptionContext;
+import com.google.common.eventbus.SubscriberExceptionHandler;
 
 @Slf4j
 public class AppEventBus implements IEventBus {
+
+  private static final long serialVersionUID = 1225711706929234463L;
+
   private EventBus eventbus;
 
   public AppEventBus() {
-    eventbus = new EventBus("DBQBMainEventBus");
+    eventbus = new EventBus(new SubscriberExceptionHandler() {
+      @Override
+      public void handleException(Throwable exception, SubscriberExceptionContext context) {
+        log.error("Could not dispatch event: " + context.getSubscriber() + " to " + context.getSubscriberMethod());
+        exception.printStackTrace();
+      }
+    });
   }
 
   @Override
