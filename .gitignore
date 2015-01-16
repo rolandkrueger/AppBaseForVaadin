@@ -4,6 +4,9 @@ target
 .project
 .classpath
 test-output
+**/.idea/libraries/
+**/.idea/workspace.xml
+atlassian-ide-plugin.xml
 
 # Package Files #
 *.jar
