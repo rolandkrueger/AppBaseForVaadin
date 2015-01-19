@@ -1,69 +1,51 @@
 package org.vaadin.appbase.components;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.vaadin.appbase.VaadinUIServices.UIServices;
-
-import java.io.IOException;
-
-import org.vaadin.appbase.enums.ErrorSeverity;
-import org.vaadin.appbase.event.impl.error.ErrorEvent;
-import org.vaadin.appbase.view.IView;
-import org.vaadin.highlighter.ComponentHighlighterExtension;
-
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
+import org.vaadin.appbase.service.templating.TemplateData;
+import org.vaadin.appbase.view.IView;
+import org.vaadin.highlighter.ComponentHighlighterExtension;
 
-public class TranslatedCustomLayout implements IView
-{
-  private String       templateName;
-  private CustomLayout layout;
+import java.io.IOException;
 
-  public TranslatedCustomLayout (String templateName)
-  {
-    checkNotNull (templateName);
-    this.templateName = templateName;
-  }
+import static com.google.common.base.Preconditions.*;
 
-  @Override
-  public IView buildLayout ()
-  {
-    layout = createTranslatedCustomLayout (templateName);
+public class TranslatedCustomLayout implements IView {
+    private final TemplateData templateData;
+    private CustomLayout layout;
 
-    if (layout != null && !VaadinService.getCurrent ().getDeploymentConfiguration ().isProductionMode ())
-    {
-      new ComponentHighlighterExtension (getLayout ()).setComponentDebugLabel (getClass ().getName ()
-          + " (template name: " + templateName + ".html)");
+    public TranslatedCustomLayout(TemplateData templateData) {
+        this.templateData = checkNotNull(templateData);
     }
-    return this;
-  }
 
-  @Override
-  public Component getContent ()
-  {
-    return layout;
-  }
+    @Override
+    public IView buildLayout() {
+        layout = createTranslatedCustomLayout(templateData);
 
-  protected CustomLayout getLayout ()
-  {
-    return layout;
-  }
-
-  private CustomLayout createTranslatedCustomLayout (String templateName)
-  {
-    CustomLayout layout = null;
-    try
-    {
-      layout = new CustomLayout (UIServices ().getTemplatingService ().getLayoutTemplate (
-          UIServices ().getContext ().getLocale (), templateName));
-    } catch (IOException ioExc)
-    {
-      UIServices ().getEventbus ()
-          .post (
-              new ErrorEvent (this, ErrorSeverity.FATAL, "Error while loading CustomLayout template " + templateName,
-                  ioExc));
-      return null;
+        if (layout != null && ! VaadinService.getCurrent().getDeploymentConfiguration().isProductionMode()) {
+            new ComponentHighlighterExtension(getLayout()).setComponentDebugLabel(getClass().getName()
+                    + " (template name: " + templateData.name() + ".html)");
+        }
+        return this;
     }
-    return layout;
-  }
+
+    @Override
+    public Component getContent() {
+        return layout;
+    }
+
+    protected CustomLayout getLayout() {
+        return layout;
+    }
+
+    private CustomLayout createTranslatedCustomLayout(TemplateData templateData) {
+        CustomLayout layout = null;
+        try {
+            layout = new CustomLayout(templateData.data());
+        } catch (IOException ioExc) {
+            throw new IllegalStateException("Error while loading CustomLayout template " + templateData, ioExc);
+        }
+        return layout;
+    }
 }

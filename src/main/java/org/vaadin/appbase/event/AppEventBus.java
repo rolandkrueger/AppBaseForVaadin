@@ -5,7 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.SubscriberExceptionContext;
 import com.google.common.eventbus.SubscriberExceptionHandler;
+import org.springframework.stereotype.Component;
+import org.vaadin.spring.UIScope;
 
+@Component
+@UIScope
 @Slf4j
 public class AppEventBus implements IEventBus {
 

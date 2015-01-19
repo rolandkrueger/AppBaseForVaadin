@@ -1,27 +1,28 @@
 package org.vaadin.appbase.uriactions.commands;
 
-import static org.vaadin.appbase.VaadinUIServices.UIServices;
 
 import org.roklib.webapps.uridispatching.AbstractURIActionCommand;
 import org.roklib.webapps.uridispatching.AbstractURIActionHandler;
+import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.event.impl.navigation.NavigateToURIEvent;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.*;
 
 public class RedirectActionCommand extends AbstractURIActionCommand
 {
-  private AbstractURIActionHandler redirectToHandler;
+  private final AbstractURIActionHandler redirectToHandler;
+  private final IEventBus eventBus;
 
-  public RedirectActionCommand (AbstractURIActionHandler redirectToHandler)
+  public RedirectActionCommand(AbstractURIActionHandler redirectToHandler, IEventBus eventBus)
   {
-    Preconditions.checkNotNull (redirectToHandler);
-    this.redirectToHandler = redirectToHandler;
+    this.eventBus = checkNotNull(eventBus);
+    this.redirectToHandler = checkNotNull(redirectToHandler);
   }
 
   @Override
   public void execute ()
   {
-    UIServices ().getEventbus ().post (new NavigateToURIEvent (this, redirectToHandler));
+    eventBus.post (new NavigateToURIEvent (this, redirectToHandler));
   }
 
   @Override

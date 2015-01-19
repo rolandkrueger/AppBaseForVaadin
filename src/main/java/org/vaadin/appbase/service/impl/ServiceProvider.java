@@ -1,12 +1,11 @@
 package org.vaadin.appbase.service.impl;
 
-import static org.vaadin.appbase.VaadinUIServices.UIServices;
-
+import com.vaadin.ui.UI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.service.IServiceProvider;
-
-import com.vaadin.ui.UI;
+import org.vaadin.spring.UIScope;
 
 /**
  * Service Provider Implementierung für den Produktionsbetrieb. Damit die von Spring verwalteten
@@ -22,15 +21,17 @@ import com.vaadin.ui.UI;
  * Unit-Tests können das Interface entsprechend auf ihre Weise implementieren und den
  * Spring-Komponenten über deren jeweilige Setter-Methoden übergeben.
  * 
- * @author Schnattiplatsch
  */
 @Component
+@UIScope
 public class ServiceProvider implements IServiceProvider
 {
+  @Autowired
+  private IEventBus eventBus;
+
   @Override
-  public IEventBus getEventbus ()
-  {
-    return UIServices ().getEventbus ();
+  public IEventBus getEventbus () {
+    return eventBus;
   }
 
 }

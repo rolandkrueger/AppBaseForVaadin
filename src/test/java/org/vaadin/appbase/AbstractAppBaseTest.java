@@ -1,21 +1,21 @@
 package org.vaadin.appbase;
 
-import static org.vaadin.appbase.VaadinUIServices.UIServices;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.UI;
 import lombok.Getter;
-
 import org.junit.Before;
+import org.vaadin.appbase.event.AppEventBus;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.service.templating.impl.TemplatingService;
 import org.vaadin.appbase.session.SessionContext;
-
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.UI;
 
 public abstract class AbstractAppBaseTest
 {
   @Getter private UI                 testUI;
   @Getter private SessionContext     sessionContext;
   @Getter private ITemplatingService templatingService;
+  @Getter
+  private AppEventBus eventBus;
 
   /**
    * Creates a test {@link UI} object which will act as the current UI during the tests.
@@ -25,6 +25,7 @@ public abstract class AbstractAppBaseTest
   {
     sessionContext = new SessionContext ();
     templatingService = new TemplatingService ();
+    eventBus = new AppEventBus();
 
     testUI = new UI ()
     {
@@ -36,23 +37,7 @@ public abstract class AbstractAppBaseTest
     UI.setCurrent (testUI);
   }
 
-  /**
-   * <p>
-   * Starts up a {@link VaadinUIServices} object that can be configured with specialized mock
-   * objects for the Spring injected services.
-   * <p>
-   * To provide your own mock objects, overwrite the corresponding getter-methods of this test base
-   * ({@link #getSessionContext()}, ...).
-   */
-  protected void startVaadinUIServices ()
-  {
-    VaadinUIServices.startUp ();
-    UIServices ().setContext (getSessionContext ());
-    UIServices ().setTemplatingService (getTemplatingService ());
-  }
-
-  protected void registerOnEventbus ()
-  {
-    UIServices ().getEventbus ().register (this);
+  protected void registerOnEventbus () {
+    getEventBus().register(this);
   }
 }

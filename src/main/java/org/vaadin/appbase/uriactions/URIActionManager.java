@@ -1,22 +1,22 @@
 package org.vaadin.appbase.uriactions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.google.common.eventbus.Subscribe;
+import com.vaadin.ui.UI;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import org.roklib.webapps.uridispatching.AbstractURIActionCommand;
 import org.roklib.webapps.uridispatching.AbstractURIActionHandler;
 import org.roklib.webapps.uridispatching.IURIActionHandler.ParameterMode;
 import org.roklib.webapps.uridispatching.URIActionDispatcher;
+import org.springframework.stereotype.Component;
 import org.vaadin.appbase.event.impl.navigation.NavigateToURIEvent;
 import org.vaadin.appbase.service.AbstractUsesServiceProvider;
+import org.vaadin.spring.UIScope;
 import org.vaadin.uriactions.URIActionNavigator;
 
-import com.google.common.eventbus.Subscribe;
-import com.vaadin.ui.UI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Der URL Action Manager kümmert sich um das komplette URL Handling. Hier werden die Dispatching
@@ -30,6 +30,8 @@ import com.vaadin.ui.UI;
  * die Hierarchie dieser Action Manager Objekte die Hierarchie der URL Actions wieder.
  */
 @Slf4j
+@UIScope
+@Component
 public class URIActionManager extends AbstractUsesServiceProvider
 {
   private URIActionNavigator          uriActionNavigator;

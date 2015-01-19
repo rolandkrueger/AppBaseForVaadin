@@ -1,18 +1,18 @@
 package org.vaadin.appbase.places;
 
+import com.google.common.base.Preconditions;
+import com.google.common.eventbus.Subscribe;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
+import org.vaadin.appbase.service.AbstractUsesServiceProvider;
+import org.vaadin.spring.UIScope;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
-import org.vaadin.appbase.service.AbstractUsesServiceProvider;
-
-import com.google.common.base.Preconditions;
-import com.google.common.eventbus.Subscribe;
 
 /**
  * <p>
@@ -27,6 +27,8 @@ import com.google.common.eventbus.Subscribe;
  * </p>
  */
 @Slf4j
+@UIScope
+@Component
 public class PlaceManager extends AbstractUsesServiceProvider
 {
   private Stack<AbstractPlace>       activePlaces;

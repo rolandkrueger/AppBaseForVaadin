@@ -1,17 +1,14 @@
 package org.vaadin.appbase.session;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.vaadin.spring.VaadinSessionScope;
+
 import java.io.Serializable;
 import java.util.Locale;
 
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
-
+@VaadinSessionScope
 @Component
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Slf4j
 public class SessionContext implements Serializable {
 

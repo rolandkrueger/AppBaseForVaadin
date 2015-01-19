@@ -1,12 +1,12 @@
 package org.vaadin.appbase.uriactions.commands;
 
-import static org.vaadin.appbase.VaadinUIServices.UIServices;
-
-import org.roklib.util.helper.CheckForNull;
 import org.roklib.webapps.uridispatching.AbstractURIActionCommand;
+import org.vaadin.appbase.event.IEventBus;
 import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
 import org.vaadin.appbase.places.AbstractPlace;
 import org.vaadin.appbase.places.PlaceManager;
+
+import static com.google.common.base.Preconditions.*;
 
 /**
  * URL Action Command, der verwendet wird, um einen Place Request auf den Eventbus zu schicken.
@@ -22,18 +22,18 @@ public class PlaceRequestActionCommand extends AbstractURIActionCommand
 {
   private static final long serialVersionUID = 313654855677764128L;
 
-  private AbstractPlace     place;
+  private final AbstractPlace place;
+  private final IEventBus eventBus;
 
-  public PlaceRequestActionCommand (AbstractPlace place)
-  {
-    CheckForNull.check (place);
-    this.place = place;
+  public PlaceRequestActionCommand(AbstractPlace place, IEventBus eventBus) {
+    this.eventBus = checkNotNull(eventBus);
+    this.place = checkNotNull(place);
   }
 
   @Override
   public void execute ()
   {
-    UIServices ().getEventbus ().post (new PlaceRequestEvent (this, place));
+    eventBus.post (new PlaceRequestEvent (this, place));
   }
 
   @Override

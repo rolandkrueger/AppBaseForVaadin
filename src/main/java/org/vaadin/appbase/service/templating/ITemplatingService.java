@@ -1,9 +1,5 @@
 package org.vaadin.appbase.service.templating;
 
-import java.io.InputStream;
-import java.util.Locale;
-
-public interface ITemplatingService
-{
-  public InputStream getLayoutTemplate (Locale forLocale, String templatePath);
+public interface ITemplatingService {
+    public TemplateData getLayoutTemplate(String templatePath);
 }
