@@ -1,5 +1,7 @@
 package org.vaadin.appbase.service.templating;
 
-public interface ITemplatingService {
+import java.io.Serializable;
+
+public interface ITemplatingService extends Serializable {
     public TemplateData getLayoutTemplate(String templatePath);
 }

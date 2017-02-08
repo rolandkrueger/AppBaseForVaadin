@@ -1,6 +1,5 @@
 package org.vaadin.appbase;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.vaadin.appbase.places.PlaceManager;
 import org.vaadin.appbase.service.IMessageProvider;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.session.SessionContext;
-import org.vaadin.appbase.uriactions.URIActionManager;
 import org.vaadin.spring.UIScope;
 
 import java.io.Serializable;
@@ -24,29 +22,23 @@ public class VaadinUIServices implements Serializable {
   @Getter
   @Setter
   private Object data;
-  @Autowired
   @Getter
-  private IEventBus eventbus;
-  @Autowired
+  private final IEventBus eventbus;
   @Getter
-  private PlaceManager placeManager;
-  @Autowired
+  private final PlaceManager placeManager;
   @Getter
-  private URIActionManager uriActionManager;
-  @Autowired
+  private final SessionContext context;
   @Getter
-  @Setter(AccessLevel.PROTECTED)
-  private SessionContext context;
-  @Autowired
+  private final ITemplatingService templatingService;
   @Getter
-  @Setter(AccessLevel.PROTECTED)
-  private ITemplatingService templatingService;
-  @Autowired
-  @Getter
-  @Setter(AccessLevel.PROTECTED)
-  private IMessageProvider messageProvider;
+  private final IMessageProvider messageProvider;
 
-  public void init() {
-    uriActionManager.initialize();
+  @Autowired
+  public VaadinUIServices(final IEventBus eventbus, final PlaceManager placeManager, final SessionContext context, final ITemplatingService templatingService, final IMessageProvider messageProvider) {
+    this.eventbus = eventbus;
+    this.placeManager = placeManager;
+    this.context = context;
+    this.templatingService = templatingService;
+    this.messageProvider = messageProvider;
   }
 }

@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.appbase.event.IEventBus;
 
+import java.io.Serializable;
+
 @Slf4j
-public abstract class AbstractUsesServiceProvider
+public abstract class AbstractUsesServiceProvider implements Serializable
 {
   private IServiceProvider serviceProvider;
 

@@ -8,11 +8,7 @@ import org.vaadin.appbase.event.impl.places.PlaceRequestEvent;
 import org.vaadin.appbase.service.AbstractUsesServiceProvider;
 import org.vaadin.spring.UIScope;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * <p>
@@ -37,7 +33,7 @@ public class PlaceManager extends AbstractUsesServiceProvider
   public PlaceManager ()
   {
     activePlaces = new Stack<> ();
-    registeredPlaces = new HashMap<String, AbstractPlace> ();
+    registeredPlaces = new HashMap<>();
   }
 
   /**
@@ -132,7 +128,7 @@ public class PlaceManager extends AbstractUsesServiceProvider
   {
     Preconditions.checkArgument (placeName != null);
     if (!isPlaceRegistered (placeName)) { throw new IllegalArgumentException (
-        "The requested place has not been registered with this place manager: " + placeName); }
+        "The requested place has not been registered with this place services: " + placeName); }
     return registeredPlaces.get (placeName);
   }
 
