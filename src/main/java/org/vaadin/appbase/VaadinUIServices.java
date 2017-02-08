@@ -9,6 +9,7 @@ import org.vaadin.appbase.places.PlaceManager;
 import org.vaadin.appbase.service.IMessageProvider;
 import org.vaadin.appbase.service.templating.ITemplatingService;
 import org.vaadin.appbase.session.SessionContext;
+import org.vaadin.appbase.uriactions.URIActionManager;
 import org.vaadin.spring.UIScope;
 
 import java.io.Serializable;
@@ -27,6 +28,8 @@ public class VaadinUIServices implements Serializable {
   @Getter
   private final PlaceManager placeManager;
   @Getter
+  private final URIActionManager uriActionManager;
+  @Getter
   private final SessionContext context;
   @Getter
   private final ITemplatingService templatingService;
@@ -34,9 +37,10 @@ public class VaadinUIServices implements Serializable {
   private final IMessageProvider messageProvider;
 
   @Autowired
-  public VaadinUIServices(final IEventBus eventbus, final PlaceManager placeManager, final SessionContext context, final ITemplatingService templatingService, final IMessageProvider messageProvider) {
+  public VaadinUIServices(final IEventBus eventbus, final PlaceManager placeManager, final URIActionManager uriActionManager, final SessionContext context, final ITemplatingService templatingService, final IMessageProvider messageProvider) {
     this.eventbus = eventbus;
     this.placeManager = placeManager;
+    this.uriActionManager = uriActionManager;
     this.context = context;
     this.templatingService = templatingService;
     this.messageProvider = messageProvider;
