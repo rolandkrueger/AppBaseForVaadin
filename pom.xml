@@ -5,7 +5,7 @@
 	<groupId>org.vaadin.addons.appbase</groupId>
 	<artifactId>appbase4vaadin</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1-SNAPSHOT</version>
+	<version>2.0</version>
 	<name>App base for Vaadin application</name>
 
 	<url>http://www.rolandkrueger.info</url>
@@ -73,7 +73,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>16.0.1</version>
+			<version>21.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.auto.value</groupId>
@@ -88,8 +88,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.addons.uriactions</groupId>
-			<artifactId>uriactions</artifactId>
-			<version>1.0</version>
+			<artifactId>uri-fragment-actions-for-vaadin</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.spring</groupId>
